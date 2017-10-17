@@ -40,7 +40,7 @@ python tiny_face_eval.py
 # Neural network diagram
 
 [This](https://github.com/cydonia999/Tiny_Faces_in_Tensorflow/blob/master/networks/ResNet101.pdf)(pdf) is 
-a network diagram of the ResNet101-based model used for an input image(height: 1150, width: 2048, channel: 3).
+a network diagram of the ResNet101-based model used here for an input image(height: 1150, width: 2048, channel: 3).
 
 
 # Examples
@@ -50,32 +50,41 @@ as experiments.
 
 ### selfie with many people
 This is the same image as one in [the authors' repo](https://github.com/peiyunh/tiny)[1].
+
 ![selfie](https://github.com/cydonia999/Tiny_Faces_in_Tensorflow/blob/master/images/selfie.jpg?raw=true)
+
 [Original image](https://github.com/peiyunh/tiny/blob/master/data/demo/selfie.jpg)
 
 ### selfie of celebrities
 ![selfie](https://github.com/cydonia999/Tiny_Faces_in_Tensorflow/blob/master/images/celeb.jpg?raw=true)
+
 [Original image](https://twitter.com/thesimpsons/status/441000198995582976)
 
 ### selfie of "celebrities"
 Homer and "Meryl Streep" are missed.
+
 ![selfie](https://github.com/cydonia999/Tiny_Faces_in_Tensorflow/blob/master/images/celeb2.jpg?raw=true)
+
 [Original image](https://twitter.com/thesimpsons/status/441000198995582976)
 
 ### zombies
 ![selfie](https://github.com/cydonia999/Tiny_Faces_in_Tensorflow/blob/master/images/zombies.jpg?raw=true)
+
 [Original image](http://www.talkingwalkingdead.com/2012/03/walk-on-by.html)
 
 ### monkeys
 ![selfie](https://github.com/cydonia999/Tiny_Faces_in_Tensorflow/blob/master/images/monkeys.jpg?raw=true)
+
 [Original image](http://intisari.grid.id/index.php/Techno/Science/Manusia-Saling-Mengenal-Wajah-Simpanse-Saling-Mengenal-Pantat)
 
 ### dogs
 ![selfie](https://github.com/cydonia999/Tiny_Faces_in_Tensorflow/blob/master/images/dogs.jpg?raw=true)
+
 [Original image](http://www.socialitelife.com/photos/sweet-crazy-woman-adopts-1500-dogs-200-cats/some-may-think-shes-barking-mad-but-one-chinese-woman-adopted-1500-stray-dogs)
 
 ### cats
 ![selfie](https://github.com/cydonia999/Tiny_Faces_in_Tensorflow/blob/master/images/cats.png?raw=true)
+
 [Original image](http://kodex.me/clanak/80268/na-ovom-ostrvu-macke-su-najbrojniji-stanovnici)
 
 ### figure1 from a paper[2]
@@ -83,6 +92,7 @@ Homer and "Meryl Streep" are missed.
 
 ### figure8 from a paper[2]. 
 Facebook's face detector failed to detect these faces(as of the paper publication date[14 Feb 2016]).
+
 ![selfie](https://github.com/cydonia999/Tiny_Faces_in_Tensorflow/blob/master/images/fig8.png?raw=true)
 
 ### figure3 from a paper[2]
@@ -96,6 +106,9 @@ Facebook's face detector failed to detect these faces(as of the paper publicatio
 - Many python codes are borrowed from [chinakook's MXNet tiny face detector](https://github.com/chinakook/hr101_mxnet)
 - parula colormap table is borrowed from [`fake_parula.py`](https://github.com/BIDS/colormap/blob/master/fake_parula.py).
 
+# Disclaimer
+
+Codes are tested only on CPUs, not GPUs.
 
 # References
 
