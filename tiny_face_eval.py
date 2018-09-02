@@ -396,6 +396,9 @@ def main():
                           help='Line width of bounding boxes(0: auto).', default=3)
     argparse.add_argument('--display', type=bool,
                           help='Display each image on window.', default=False)
+    argparse.add_argument('--method', type=str,
+                          help='Crop or save bboxed image.', choices=['bbox', 'crop'], default="bbox")
+    
 
     args = argparse.parse_args()
 
@@ -408,8 +411,10 @@ def main():
         args.output_dir), "output directory: " + args.output_dir + " not found."
     assert args.line_width >= 0, "line_width should be >= 0."
 
+    eval_fun = evaluate if args.method == "bbox" else evaluate_and_crop
+    
     with tf.Graph().as_default():
-        evaluate_and_crop(
+        eval_fun(
             weight_file_path=args.weight_file_path, data_dir=args.data_dir, output_dir=args.output_dir,
             prob_thresh=args.prob_thresh, nms_thresh=args.nms_thresh,
             lw=args.line_width, display=args.display)
