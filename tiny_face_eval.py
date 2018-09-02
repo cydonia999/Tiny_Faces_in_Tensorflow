@@ -409,7 +409,7 @@ def main():
     assert args.line_width >= 0, "line_width should be >= 0."
 
     with tf.Graph().as_default():
-        evaluate(
+        evaluate_and_crop(
             weight_file_path=args.weight_file_path, data_dir=args.data_dir, output_dir=args.output_dir,
             prob_thresh=args.prob_thresh, nms_thresh=args.nms_thresh,
             lw=args.line_width, display=args.display)
