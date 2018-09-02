@@ -222,7 +222,7 @@ def evaluate_and_crop(weight_file_path, data_dir, output_dir, prob_thresh=0.5, n
 
             for i, img in zip(range(len(cropped)), cropped):
                 cimig = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-                cv2.imwrite(os.path.join(in_out_dict[filename], str(i) + fname), cimig)
+                cv2.imwrite(os.path.join(in_out_dict[filename], str(i) + "-" + fname), cimig)
 
 
 def evaluate(weight_file_path, data_dir, output_dir, prob_thresh=0.5, nms_thresh=0.1, lw=3, display=False):
