@@ -123,6 +123,7 @@ def evaluate_and_crop(weight_file_path, data_dir, output_dir, sample_ratio=0.1, 
         print(in_out)
         
         for (filename, out_dir) in in_out:
+            print("Processing... ", filename)
             fname = filename.split(os.sep)[-1]
             raw_img = cv2.imread(filename)
             raw_img = cv2.cvtColor(raw_img, cv2.COLOR_BGR2RGB)
