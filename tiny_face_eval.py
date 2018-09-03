@@ -119,6 +119,7 @@ def evaluate_and_crop(weight_file_path, data_dir, output_dir, sample_ratio=0.1, 
                     file_path = os.path.join(current_dir, filename)
                     in_out.append((file_path, current_out_dir))
         
+        print(in_out)
         in_out = random.sample(in_out, int(sample_ratio * len(in_out)))
         print(in_out)
         
@@ -417,6 +418,8 @@ def main():
         args.output_dir), "output directory: " + args.output_dir + " not found."
     assert args.line_width >= 0, "line_width should be >= 0."    
     
+    print(args)
+
     with tf.Graph().as_default():
         if args.method == "bbox":
             evaluate(
