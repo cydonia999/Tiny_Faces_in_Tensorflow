@@ -5,6 +5,7 @@ import glob
 import os
 import pickle
 import time
+import random
 from argparse import ArgumentParser
 
 import cv2
@@ -56,7 +57,7 @@ def crop_image(raw_img, bbox):
     return(raw_img[bbox[1]:bbox[3], bbox[0]:bbox[2]])
 
 
-def evaluate_and_crop(weight_file_path, data_dir, output_dir, prob_thresh=0.5, nms_thresh=0.1, lw=3, display=False):
+def evaluate_and_crop(weight_file_path, data_dir, output_dir, sample_ratio=0.1, prob_thresh=0.5, nms_thresh=0.1, lw=3, display=False):
     """Detect faces in images.
     Args:
       prob_thresh:
@@ -105,7 +106,7 @@ def evaluate_and_crop(weight_file_path, data_dir, output_dir, prob_thresh=0.5, n
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
 
-        in_out_dict = {}
+        in_out = []
         if not os.path.isdir(output_dir):
             os.mkdir(output_dir)
         for dirname, dirnames, _ in os.walk(data_dir):
@@ -116,9 +117,11 @@ def evaluate_and_crop(weight_file_path, data_dir, output_dir, prob_thresh=0.5, n
                 os.mkdir(current_out_dir)
                 for filename in vid_paths:          
                     file_path = os.path.join(current_dir, filename)
-                    in_out_dict[file_path] = current_out_dir                    
+                    in_out.append((file_path, current_out_dir))                    
         
-        for filename in in_out_dict:
+        in_out = random.sample(in_out, int(sample_ratio * len(in_out)))
+        
+        for (filename, out_dir) in in_out:
             fname = filename.split(os.sep)[-1]
             raw_img = cv2.imread(filename)
             raw_img = cv2.cvtColor(raw_img, cv2.COLOR_BGR2RGB)
@@ -222,7 +225,7 @@ def evaluate_and_crop(weight_file_path, data_dir, output_dir, prob_thresh=0.5, n
 
             for i, img in zip(range(len(cropped)), cropped):
                 cimig = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-                cv2.imwrite(os.path.join(in_out_dict[filename], str(i) + "-" + fname), cimig)
+                cv2.imwrite(os.path.join(out_dir, str(i) + "-" + fname), cimig)
 
 
 def evaluate(weight_file_path, data_dir, output_dir, prob_thresh=0.5, nms_thresh=0.1, lw=3, display=False):
@@ -398,6 +401,8 @@ def main():
                           help='Display each image on window.', default=False)
     argparse.add_argument('--method', type=str,
                           help='Crop or save bboxed image.', choices=['bbox', 'crop'], default="bbox")
+    argparse.add_argument('--sample', type=float,
+                          help='Set sample ratio.', default=0.1)
     
 
     args = argparse.parse_args()
@@ -409,15 +414,19 @@ def main():
         args.data_dir + " not found."
     assert os.path.exists(
         args.output_dir), "output directory: " + args.output_dir + " not found."
-    assert args.line_width >= 0, "line_width should be >= 0."
-
-    eval_fun = evaluate if args.method == "bbox" else evaluate_and_crop
+    assert args.line_width >= 0, "line_width should be >= 0."    
     
     with tf.Graph().as_default():
-        eval_fun(
-            weight_file_path=args.weight_file_path, data_dir=args.data_dir, output_dir=args.output_dir,
-            prob_thresh=args.prob_thresh, nms_thresh=args.nms_thresh,
-            lw=args.line_width, display=args.display)
+        if args.method == "bbox":
+            evaluate(
+                weight_file_path=args.weight_file_path, data_dir=args.data_dir, output_dir=args.output_dir,
+                prob_thresh=args.prob_thresh, nms_thresh=args.nms_thresh,
+                lw=args.line_width, display=args.display)
+        else:
+            evaluate_and_crop(
+                weight_file_path=args.weight_file_path, data_dir=args.data_dir, output_dir=args.output_dir,
+                prob_thresh=args.prob_thresh, nms_thresh=args.nms_thresh,
+                lw=args.line_width, display=args.display, sample_ratio=args.sample)
 
 
 if __name__ == '__main__':
