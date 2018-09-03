@@ -117,9 +117,10 @@ def evaluate_and_crop(weight_file_path, data_dir, output_dir, sample_ratio=0.1, 
                 os.mkdir(current_out_dir)
                 for filename in vid_paths:          
                     file_path = os.path.join(current_dir, filename)
-                    in_out.append((file_path, current_out_dir))                    
+                    in_out.append((file_path, current_out_dir))
         
         in_out = random.sample(in_out, int(sample_ratio * len(in_out)))
+        print(in_out)
         
         for (filename, out_dir) in in_out:
             fname = filename.split(os.sep)[-1]
