@@ -232,7 +232,7 @@ def evaluate_and_crop(weight_file_path, data_dir, output_dir, sample_ratio=0.1, 
             for i, (img, bbox) in zip(range(len(cropped)), cropped):
                 cimig = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
                 cv2.imwrite(os.path.join(out_dir, str(i) + "-" + fname), cimig)
-                file_boxes.write(os.path.join(out_dir, str(i) + "-" + fname) + "," + ",".join(list(bbox)) + "\n")
+                file_boxes.write(os.path.join(out_dir, str(i) + "-" + fname) + "," + ",".join([str(int(x)) for x in bbox ]) + "\n")
 
     file_boxes.close()    
 
