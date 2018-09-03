@@ -88,7 +88,7 @@ def evaluate_and_crop(weight_file_path, data_dir, output_dir, sample_ratio=0.1, 
     score_final = model.tiny_face(x)
 
     # Find image files in data_dir.
-    exts = [ '.png', '.jpg', '.jpeg' ]    
+    exts = [ 'png', 'jpg', 'jpeg' ]    
 
     # Load an average image and clusters(reference boxes of templates).
     with open(weight_file_path, "rb") as f:
