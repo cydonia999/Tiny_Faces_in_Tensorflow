@@ -221,7 +221,7 @@ def evaluate_and_crop(weight_file_path, data_dir, output_dir, sample_ratio=0.1, 
             refind_idx = sess.run(refind_idx)
             refined_bboxes = bboxes[refind_idx]
             print("bboxes", refined_bboxes)
-            cropped = [crop_image(raw_img, bbox), bbox for bbox in refined_bboxes]
+            cropped = [ (crop_image(raw_img, bbox), bbox) for bbox in refined_bboxes]
             #overlay_bounding_boxes(raw_img, refined_bboxes, lw)
 
             if display:
