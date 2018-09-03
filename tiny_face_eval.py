@@ -90,6 +90,8 @@ def evaluate_and_crop(weight_file_path, data_dir, output_dir, sample_ratio=0.1, 
     # Find image files in data_dir.
     exts = [ 'png', 'jpg', 'jpeg' ]    
 
+    file_boxes = open(os.path.join(output_dir, "bboxes.csv"), "w")
+    
     # Load an average image and clusters(reference boxes of templates).
     with open(weight_file_path, "rb") as f:
         _, mat_params_dict = pickle.load(f)
@@ -219,7 +221,7 @@ def evaluate_and_crop(weight_file_path, data_dir, output_dir, sample_ratio=0.1, 
             refind_idx = sess.run(refind_idx)
             refined_bboxes = bboxes[refind_idx]
             print("bboxes", refined_bboxes)
-            cropped = [crop_image(raw_img, bbox) for bbox in refined_bboxes]
+            cropped = [crop_image(raw_img, bbox), bbox for bbox in refined_bboxes]
             #overlay_bounding_boxes(raw_img, refined_bboxes, lw)
 
             if display:
@@ -227,9 +229,12 @@ def evaluate_and_crop(weight_file_path, data_dir, output_dir, sample_ratio=0.1, 
                 plt.imshow(raw_img)
                 plt.show()            
 
-            for i, img in zip(range(len(cropped)), cropped):
+            for i, (img, bbox) in zip(range(len(cropped)), cropped):
                 cimig = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
                 cv2.imwrite(os.path.join(out_dir, str(i) + "-" + fname), cimig)
+                file_boxes.write(os.path.join(out_dir, str(i) + "-" + fname) + "," + bbox.join(",") + "\n")
+
+    file_boxes.close()    
 
 
 def evaluate(weight_file_path, data_dir, output_dir, prob_thresh=0.5, nms_thresh=0.1, lw=3, display=False):
