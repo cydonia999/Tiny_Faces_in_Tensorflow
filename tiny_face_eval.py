@@ -126,6 +126,8 @@ def evaluate_and_crop(weight_file_path, data_dir, output_dir, sample_ratio=0.1, 
             print("Processing... ", filename)
             fname = filename.split(os.sep)[-1]
             raw_img = cv2.imread(filename)
+            if not (raw_img.shape[0] > 10 and raw_img.shape[1] > 10 and raw_img.shape[2] == 3):
+                continue
             raw_img = cv2.cvtColor(raw_img, cv2.COLOR_BGR2RGB)
             raw_img_f = raw_img.astype(np.float32)
 
