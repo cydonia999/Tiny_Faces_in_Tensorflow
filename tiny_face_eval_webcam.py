@@ -212,7 +212,7 @@ def main():
 
   with tf.Graph().as_default():
     evaluate(
-      weight_file_path=args.weight_file_path
+      weight_file_path=args.weight_file_path)
       
 
 if __name__ == '__main__':
