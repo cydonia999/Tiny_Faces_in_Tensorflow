@@ -41,10 +41,10 @@ python tiny_face_eval.py
 ## Tesing Tiny Face Detector in TensorFlow with webcam
 
 Run:
-
+```
 python tiny_face_eval_webcam.py
-
-
+  --weight_file_path /path/to/pickle_file
+```
 
 # Neural network diagram
 
