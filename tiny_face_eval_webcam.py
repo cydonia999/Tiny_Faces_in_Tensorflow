@@ -198,5 +198,22 @@ def evaluate(weight_file_path,prob_thresh=0.5, nms_thresh=0.1, lw=3, display=Fal
     video_capture.release()
     cv2.destroyAllWindows()
 
-weight_file_path='/Users/apple/Downloads/Tiny_Faces_in_Tensorflow-master/mat2tf.pkl'
-evaluate(weight_file_path)
+#weight_file_path='/Users/apple/Downloads/Tiny_Faces_in_Tensorflow-master/mat2tf.pkl'
+#evaluate(weight_file_path)
+def main():
+
+  argparse = ArgumentParser()
+  argparse.add_argument('--weight_file_path', type=str, help='Pretrained weight file.', default="/path/to/mat2tf.pkl")
+
+  args = argparse.parse_args()
+
+  # check arguments
+  assert os.path.exists(args.weight_file_path), "weight file: " + args.weight_file_path + " not found."
+
+  with tf.Graph().as_default():
+    evaluate(
+      weight_file_path=args.weight_file_path
+      
+
+if __name__ == '__main__':
+  main()
