@@ -18,6 +18,8 @@ write back to a pickle file which is used in a TensorFlow model as initial weigh
 from the authors' repo.
 
 2. Convert the model to a pickle file by:
+
+#before running the below command make a blank mat2tf.pkl file
 ```
 python matconvnet_hr101_to_pickle.py 
         --matlab_model_path /path/to/pretrained_model 
@@ -36,6 +38,13 @@ python tiny_face_eval.py
   --data_dir /path/to/input_image_directory
   --output_dir /path/to/output_directory
 ```
+## Tesing Tiny Face Detector in TensorFlow with webcam
+
+Run:
+
+python tiny_face_eval_webcam.py
+
+
 
 # Neural network diagram
 
